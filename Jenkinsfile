@@ -1,7 +1,4 @@
-
-          
-
-   pipeline {
+pipeline {
     agent any
 
     stages {
@@ -13,7 +10,8 @@
 
         stage('Run Docker Container') {
             steps {
-                bat 'docker run -d your-docker-image:latest'
+                // Expose container port 80 to host port 8080
+                bat 'docker run -d -p 8000:80 your-docker-image:latest'
             }
         }
     }
