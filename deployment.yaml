@@ -16,6 +16,6 @@ spec:
       - name: webapp-container
         image: 1ds23cs403/your-docker-image:latest
         ports:
-        - containerPort: 85
+        - containerPort: 80
       imagePullSecrets:
       - name: regcred
