@@ -4,23 +4,22 @@ pipeline {
     environment {
         DOCKER_HUB_USERNAME = "1ds23cs403"
         DOCKER_HUB_IMAGE = "your-docker-image"
-        KUBECONFIG = "C:\\Users\\HP\\.kube\\config" // Make sure this path is correct
     }
 
     stages {
         stage('Clone Repository') {
             steps {
-                // Clone your GitHub repository containing the Dockerfile
-                git 'https://github.com/your-username/your-repo.git'
+                // Use SSH for GitHub cloning (Windows may require additional setup for SSH)
+                bat 'git clone git@github.com:your-username/your-repo.git'
             }
         }
 
         stage('Build Docker Image') {
             steps {
                 script {
-                    // Build the Docker image
+                    // Build the Docker image (use bat instead of sh for Windows)
                     echo "Building Docker image..."
-                    sh "docker build -t ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_IMAGE}:latest ."
+                    bat "docker build -t ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_IMAGE}:latest ."
                 }
             }
         }
@@ -28,9 +27,9 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    // Log in to Docker Hub and push the Docker image
+                    // Push the Docker image to Docker Hub (use bat instead of sh for Windows)
                     echo "Pushing Docker image to Docker Hub..."
-                    sh "docker push ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_IMAGE}:latest"
+                    bat "docker push ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_IMAGE}:latest"
                 }
             }
         }
@@ -38,12 +37,11 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 script {
-                    // Apply the Kubernetes deployment file to Minikube
+                    // Apply the Kubernetes deployment file (use bat instead of sh for Windows)
                     echo "Deploying to Minikube Kubernetes..."
-                    sh "kubectl apply -f deployment.yaml"
+                    bat "kubectl apply -f deployment.yaml"
                 }
             }
         }
     }
 }
-
