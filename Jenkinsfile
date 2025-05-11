@@ -12,7 +12,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Use Jenkins Git plugin for cloning the repository
-                git credentialsId: "${GITHUB_CREDENTIALS}", url: "${GITHUB_REPO}"
+                git credentialsId: "${GITHUB_CREDENTIALS}", url: "${GITHUB_REPO}", branch: 'main'
             }
         }
 
