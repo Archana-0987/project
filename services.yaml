@@ -8,6 +8,6 @@ spec:
     app: webapp
   ports:
     - protocol: TCP
-      port: 80
-      targetPort: 80
+      port: 85
+      targetPort: 85
       nodePort: 30007
