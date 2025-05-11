@@ -4,20 +4,22 @@ pipeline {
     environment {
         DOCKER_HUB_USERNAME = "1ds23cs403"
         DOCKER_HUB_IMAGE = "your-docker-image"
+        GITHUB_REPO = "https://github.com/Archana-0987/project.git"
+        GITHUB_CREDENTIALS = 'github-jenkins-token'  // This is the Jenkins credential ID for GitHub token
     }
 
     stages {
-        stage('Clone Repository') {
+        stage('Checkout') {
             steps {
-                // Use SSH for GitHub cloning (Windows may require additional setup for SSH)
-                bat 'git clone git@github.com:your-username/your-repo.git'
+                // Use Jenkins Git plugin for cloning the repository
+                git credentialsId: "${GITHUB_CREDENTIALS}", url: "${GITHUB_REPO}"
             }
         }
 
         stage('Build Docker Image') {
             steps {
                 script {
-                    // Build the Docker image (use bat instead of sh for Windows)
+                    // Build the Docker image
                     echo "Building Docker image..."
                     bat "docker build -t ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_IMAGE}:latest ."
                 }
@@ -27,7 +29,7 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    // Push the Docker image to Docker Hub (use bat instead of sh for Windows)
+                    // Push the Docker image to Docker Hub
                     echo "Pushing Docker image to Docker Hub..."
                     bat "docker push ${DOCKER_HUB_USERNAME}/${DOCKER_HUB_IMAGE}:latest"
                 }
@@ -37,7 +39,7 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 script {
-                    // Apply the Kubernetes deployment file (use bat instead of sh for Windows)
+                    // Apply the Kubernetes deployment file
                     echo "Deploying to Minikube Kubernetes..."
                     bat "kubectl apply -f deployment.yaml"
                 }
@@ -45,3 +47,6 @@ pipeline {
         }
     }
 }
+
+              
+                  
