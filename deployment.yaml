@@ -14,6 +14,8 @@ spec:
     spec:
       containers:
       - name: webapp-container
-        image: Archana-0987/your-docker-image:latest  # Replace this with your image name
+        image: 1ds23cs403/your-docker-image:latest
         ports:
         - containerPort: 80
+      imagePullSecrets:
+      - name: regcred  # This tells Kubernetes to use the 'regcred' secret for pulling the image
